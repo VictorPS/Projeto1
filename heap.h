@@ -22,7 +22,7 @@ void inicializaHeap(tHeap* heap, int tam);
 void liberaHeap(tHeap* heap);
 
 void pushNode (tHeap *q, tNode node);
-tNode popNode (tNode *q);
+tNode popNode (tHeap *q);
 
-int isEmpty (tNode *q);
-void printQueue (tNode *q);
+int isEmpty (tHeap *q);
+void printQueue (tHeap *q);

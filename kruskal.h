@@ -1,14 +1,14 @@
 #indef KRUSKAL.H
 #define KRUSKAL.H
-/* Todo - criar o vetor de classes na main
-
-
+/* Todo
+    -   criar o vetor de classes na main
+    -   criar a arvore minima na main (e inicializar)
+    -
 */
 
-// insere todas as arestas na heap
-void K_insere(tGrafo *g, int numVertices, tHeap *h);
-void K_geraArvore(tHeap *h, );
-void K_union(int **classes, int classeFixa, int classeAtual);
+void K_insereHeap(tGrafo *g, tHeap *h, int nVertices);
+void doKruskal(tGrafo *g, int **classes, tHeap *q, int nVertices, tGrafo *krusk, int k);
+void K_union(int **classes, tHeap *q, int* c, int *n, int nVertices, tGrafo *krusk);
 int K_find(int **classes, int pos);
 
 
