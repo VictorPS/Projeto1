@@ -30,7 +30,7 @@ void doKruskal(tGrafo *g, int **classes, tHeap *q, int nVertices, tGrafo *krusk,
     K_insereHeap(g , q ,nVertices);
 
     while(n < nVertices - k){
-        K_union(classes,q, c, n, nVertices, krusk);
+        K_union(classes,q, &c, &n, nVertices, krusk);
         if(isEmpty(q)){
             printf("Erro, a heap chegou ao fim e não foi possível gerar os clusters\n");
             break;
