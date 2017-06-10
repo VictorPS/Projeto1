@@ -1,5 +1,5 @@
 
-
+// struct com os vértices e a distância entre eles
 typedef struct{
 
 	int v, u;
@@ -7,6 +7,8 @@ typedef struct{
 
 }tNode;
 
+// struct com a fila de prioridades, o número de nós máximo (número de arestas)
+// e a posição para o ultimo nó da fila
 typedef struct{
 
 	tNode *fila;
