@@ -18,3 +18,9 @@ typedef struct{
 
 void inicializaHeap(tHeap* heap, int tam);
 void liberaHeap(tHeap* heap);
+
+void pushNode (tHeap *q, tNode node);
+tNode popNode (tHeap *q);
+
+int isEmpty (tHeap *q);
+void printQueue (tHeap *q);

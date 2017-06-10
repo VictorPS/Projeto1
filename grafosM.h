@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#define NULO -1
+#define NULO -1 
 
 typedef float tPeso;
 typedef int tVertice;
