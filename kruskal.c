@@ -6,6 +6,7 @@
 #include "grafosM.c"
 #endif // GRAFOSM_H
 #include <stdlib.h>
+#include <stdio.h>
 
 // insere todas as arestas na heap
 // Jorge - variável criada para utilizar a função recuperaAdj, ou seja
@@ -58,7 +59,7 @@ void K_union(int **classes, tHeap *q, int* c, int *n, int nVertices, tGrafo *kru
         }
         // se u já tiver classe, v recebe a sua classe
         else{
-            *classes[node.v] = classes[node.u];
+            *classes[node.v] = *classes[node.u];
         }
         (*n)++;
         insereAresta(krusk, node.v, node.u, node.dist);
@@ -78,3 +79,10 @@ void K_union(int **classes, tHeap *q, int* c, int *n, int nVertices, tGrafo *kru
 int K_find(int **classes, int pos){
     return *classes[pos];
 }
+//
+//void K_ArquivoClasses(int **classes, FILE* out, int nVertices){
+//    int i;
+//    for (i=0; i<nVertices; i++){
+//        fprintf()
+//    }
+//}
