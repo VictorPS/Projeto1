@@ -14,14 +14,17 @@ typedef struct {
 
 int main(int argc, char** argv){
 
+    int k =6;
 	int v = 0, i, j;
 	float data;
 	FILE *in, *out;
 
 	tGrafo g;
+	tGrafo minima;
 	tHeap heap;
 	tPonto *cont;
 	tNode aux;
+	int *classes;
 
 	in = fopen ("data.txt", "r");
 	out = fopen ("out.txt", "w");
@@ -39,8 +42,15 @@ int main(int argc, char** argv){
 		fscanf(in, "%f %f", &cont[i].x, &cont[i].y);
 
 	inicializaGrafo(&g, v);
-	inicializaHeap(&heap, 10);
+	inicializaGrafo(&minima, v);
 
+	inicializaHeap(&heap, v*v);
+
+    classes = (int*)malloc(sizeof(int)*v);
+
+
+    // Calcula as distancias entre todos os vertices criando um
+    // grafo fortemente conexo.
 	for(i=0; i<v; i++){
 		for(j=0; j<v; j++){
 			if(i!=j){
@@ -49,32 +59,32 @@ int main(int argc, char** argv){
 				data = sqrtf(data);
 				insereAresta(&g, i, j, data);
 			}
-			if(i == 0 && j<11 && j>0){
-				aux.v = i;
-				aux.u = j;
-				aux.dist = g.mat[i][j];
-				pushNode(&heap, aux);
-			}
-
 		}
 	}
 
+	// faz o algoritmo de kruskall
+    doKruskal(&g, &classes, &heap, v, &minima, k);
+    // coloca no arquivo de saida as classes
+    K_criaArquivoClasses(&classes, out, v, k);
+
+
+//	printQueue(&heap);
+//
+///*	while(!isEmpty(&heap)){*/
+//		aux = popNode(&heap);
+//		printf("Informacoes dos elementos: %d, %d, %.2f\n", aux.u, aux.v, aux.dist);
+///*	}*/
+//
+//	printf("Ultimo = %d\n", heap.ultimo);
+//
 //	printQueue(&heap);
 
-/*	while(!isEmpty(&heap)){*/
-		aux = popNode(&heap);
-		printf("Informacoes dos elementos: %d, %d, %.2f\n", aux.u, aux.v, aux.dist);
-
-/*	}*/
-
-	printf("Ultimo = %d\n", heap.ultimo);
-
-	printQueue(&heap);
-
 	liberaGrafo(&g);
+	liberaGrafo(&minima);
 	liberaHeap(&heap);
 
 	free (cont);
+    free (classes);
 
 	fclose (in);
 	fclose (out);

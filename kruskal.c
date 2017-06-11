@@ -13,31 +13,36 @@
 // não é utilizada para nada
 void K_insereHeap(tGrafo *g, tHeap *h, int nVertices){
     int i, j;
-    int *Jorge;
+    int Jorge;
     tNode no;
-    for(i = 1; i<nVertices; i++){
+    for(i = 0; i<nVertices; i++){
        for(j = i+1; j<nVertices; j++){
-            if(NULO != existeAresta(g, i,j)){
+            if(existeAresta(g, i,j)){
                 no.v = i;
                 no.u = j;
-                recuperaAdj(g, i, j , Jorge, &(no.dist));
+                recuperaAdj(g, i, j , &Jorge, &(no.dist));
                 pushNode(h, no);
             }
        }
     }
 }
 
-
+// gera a arvore mínima utilizando o algoritmo de kruskal
 void doKruskal(tGrafo *g, int **classes, tHeap *q, int nVertices, tGrafo *krusk, int k){
     int c = 1;
     int n = 0;
+    int i;
 
-    K_insereHeap(g , q ,nVertices);
+    for(i=0; i<nVertices;i++){
+        (*classes)[i] = 0;
+    }
 
-    while(n < nVertices - k){
+    K_insereHeap(&(*g) , &(*q) ,nVertices);
+
+    while(n < nVertices - k - 1){
         K_union(classes,q, &c, &n, nVertices, krusk);
         if(isEmpty(q)){
-            printf("Erro, a heap chegou ao fim e não foi possível gerar os clusters\n");
+            printf("Erro, a heap chegou ao fim e nao foi possivel gerar os clusters\n");
             break;
         }
     }
@@ -49,40 +54,60 @@ void K_union(int **classes, tHeap *q, int* c, int *n, int nVertices, tGrafo *kru
     tNode node = popNode (q);
     int i;
 
-    // v não tem classe
-    if(*classes[node.v] == 0){
-        // se u não tem classe, ambos recebem uma classe nova
-        if(K_find(classes , node.u) == 0){
-            *classes[node.v] = (*c);
-            *classes[node.u] = (*c);
-            (*c)++;
-        }
-        // se u já tiver classe, v recebe a sua classe
-        else{
-            *classes[node.v] = *classes[node.u];
-        }
+    if(K_find(classes, node.v) == 0 && K_find(classes, node.u) == 0){
+        (*classes)[node.v] = (*c);
+        (*classes)[node.u] = (*classes)[node.v];
+        (*c)++;
         (*n)++;
         insereAresta(krusk, node.v, node.u, node.dist);
     }
-    // se ambos os vertices tiverem classes diferentes, todos os
-    // vertices que possuirem a mesma classe de u recebem a classe de v
-    else if(K_find(classes , node.v) != K_find(classes , node.u)){
+    else if(K_find(classes, node.v) != 0 && K_find(classes, node.u) == 0){
+        (*classes)[node.u] = (*classes)[node.v];
+        (*n)++;
+        insereAresta(krusk, node.v, node.u, node.dist);
+    }
+    else if(K_find(classes, node.v) == 0 && K_find(classes, node.u) != 0){
+        (*classes)[node.v] = (*classes)[node.u];
+        (*n)++;
+        insereAresta(krusk, node.v, node.u, node.dist);
+    }
+    else if(K_find(classes, node.v) != 0 && K_find(classes, node.u) != 0 &&
+            K_find(classes, node.v) != K_find(classes, node.u)){
         for(i=0; i<nVertices; i++){
-            if(K_find(classes , i) == K_find(classes , node.v)){
-                *classes[i] = *classes[node.u];
+            if(K_find(classes , i) == K_find(classes , node.u) && i != node.u){
+                (*classes)[i] = (*classes)[node.v];
             }
         }
+        (*classes)[node.u] = (*classes)[node.v];
+        (*n)++;
+        insereAresta(krusk, node.v, node.u, node.dist);
     }
-    // se as classes de u e v forem a mesma, nada acontece.
 }
 
 int K_find(int **classes, int pos){
-    return *classes[pos];
+    return (*classes)[pos];
 }
-//
-//void K_ArquivoClasses(int **classes, FILE* out, int nVertices){
-//    int i;
-//    for (i=0; i<nVertices; i++){
-//        fprintf()
-//    }
-//}
+
+// cria o arquivo de classes
+void K_criaArquivoClasses(int **classes, FILE* out, int nVertices, int k){
+    int *c;
+    int i, j;
+    c = (int*) malloc(sizeof(int)*(k+1));
+    for(i = 0; i<k+1; i++){
+        c[i] = -1;
+    }
+    for(i = 0; i<nVertices; i++){
+        for(j=0; j<= k+1; j++){
+            if((*classes)[i] == c[j] || c[j] == -1){
+                c[j] = (*classes)[i];
+                (*classes)[i] = j+1;
+                break;
+            }
+        }
+    }
+
+    for (i=0; i<nVertices; i++){
+        fprintf(out, "%d\n", (*classes)[i]);
+    }
+    free (c);
+}
