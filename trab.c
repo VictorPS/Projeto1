@@ -2,6 +2,8 @@
 #include <math.h>
 #include "grafosM.c"
 #include "heap.c"
+//#include "kruskal.c"
+#include "prim.c"
 
 typedef struct {
 
