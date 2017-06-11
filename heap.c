@@ -73,7 +73,7 @@ tNode popNode (tHeap *q){
 			fim = 1;
 
 		else{
-			if(dir > q->ultimo){
+			if(dir <= q->ultimo){
 			
 				if(q->fila[esq].dist <= q->fila[dir].dist)
 					menor = esq;
