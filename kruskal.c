@@ -1,6 +1,10 @@
 #include "kruskal.h"
+#ifndef HEAP_H
 #include "heap.h"
+#endif // HEAP_H
+#ifndef GRAFOSM_H
 #include "grafosM.c"
+#endif // GRAFOSM_H
 #include <stdlib.h>
 
 // insere todas as arestas na heap
@@ -54,7 +58,7 @@ void K_union(int **classes, tHeap *q, int* c, int *n, int nVertices, tGrafo *kru
         }
         // se u já tiver classe, v recebe a sua classe
         else{
-            *classes[node.v] = classe[node.u];
+            *classes[node.v] = classes[node.u];
         }
         (*n)++;
         insereAresta(krusk, node.v, node.u, node.dist);

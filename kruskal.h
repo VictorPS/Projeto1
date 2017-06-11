@@ -1,5 +1,5 @@
-#indef KRUSKAL.H
-#define KRUSKAL.H
+#ifndef KRUSKAL_H
+#define KRUSKAL_H
 /* Todo
     -   criar o vetor de classes na main
     -   criar a arvore minima na main (e inicializar)

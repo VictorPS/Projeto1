@@ -2,8 +2,8 @@
 #include <math.h>
 #include "grafosM.c"
 #include "heap.c"
-//#include "kruskal.c"
-#include "prim.c"
+#include "kruskal.c"
+//#include "prim.c"
 
 typedef struct {
 
@@ -22,7 +22,7 @@ int main(int argc, char** argv){
 	tHeap heap;
 	tPonto *cont;
 	tNode aux;
-	
+
 	in = fopen ("data.txt", "r");
 	out = fopen ("out.txt", "w");
 
@@ -37,7 +37,7 @@ int main(int argc, char** argv){
 
 	for(i=0; i<v; i++)
 		fscanf(in, "%f %f", &cont[i].x, &cont[i].y);
-	
+
 	inicializaGrafo(&g, v);
 	inicializaHeap(&heap, 10);
 
@@ -55,7 +55,7 @@ int main(int argc, char** argv){
 				aux.dist = g.mat[i][j];
 				pushNode(&heap, aux);
 			}
-		
+
 		}
 	}
 
@@ -66,16 +66,16 @@ int main(int argc, char** argv){
 		printf("Informacoes dos elementos: %d, %d, %.2f\n", aux.u, aux.v, aux.dist);
 
 /*	}*/
-	
+
 	printf("Ultimo = %d\n", heap.ultimo);
 
 	printQueue(&heap);
 
 	liberaGrafo(&g);
 	liberaHeap(&heap);
-	
+
 	free (cont);
-	
+
 	fclose (in);
 	fclose (out);
 

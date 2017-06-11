@@ -1,4 +1,5 @@
-
+#ifndef HEAP_H
+#define HEAP_H
 // struct com os vértices e a distância entre eles
 typedef struct{
 
@@ -26,3 +27,5 @@ tNode popNode (tHeap *q);
 
 int isEmpty (tHeap *q);
 void printQueue (tHeap *q);
+
+#endif
