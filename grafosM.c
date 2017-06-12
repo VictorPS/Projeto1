@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "grafosM.h"
 
 void inicializaGrafo(tGrafo *g, tVertice numVertices)

@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "heap.h"
 
 void inicializaHeap(tHeap* heap, int tam){
@@ -33,7 +35,7 @@ void pushNode (tHeap *q, tNode node){
 	else
 		pai = (i/2);
 
-	while(q->fila[i].dist < q->fila[pai].dist && i > 0){
+	while(q->fila[i].dist < q->fila[pai].dist && i > 0){	
 
 		aux = q->fila[i];
 		q->fila[i] = q->fila[pai];
@@ -41,7 +43,7 @@ void pushNode (tHeap *q, tNode node){
 
 		i = pai;
 
-
+		
 		if(i%2 == 0)
 			pai = (i/2)-1;
 
@@ -52,9 +54,9 @@ void pushNode (tHeap *q, tNode node){
 };
 
 tNode popNode (tHeap *q){
-
+	
 	int pai, dir, esq, menor, fim=0;
-
+	
 	tNode aux, toRet;
 
 	toRet = q->fila[0];
@@ -74,13 +76,12 @@ tNode popNode (tHeap *q){
 
 		else{
 			if(dir <= q->ultimo){
-
+			
 				if(q->fila[esq].dist <= q->fila[dir].dist)
 					menor = esq;
 
 				else
 					menor = dir;
-
 
 				if(q->fila[pai].dist > q->fila[menor].dist){
 					aux = q->fila[pai];
@@ -88,10 +89,10 @@ tNode popNode (tHeap *q){
 					q->fila[menor] = aux;
 					pai = menor;
 				}
-
+				
 				else
 					fim = 1;
-
+			
 			}
 
 			else{
@@ -101,11 +102,11 @@ tNode popNode (tHeap *q){
 					q->fila[esq] = aux;
 					pai = esq;
 				}
-
+				
 				else
 					fim = 1;
 			}
-		}
+		}	
 	}
 
 	return toRet;
@@ -119,7 +120,7 @@ int isEmpty (tHeap *q){
 };
 
 void printQueue (tHeap *q){
-
+	
 	int i;
 
 	for(i=0; i<=q->ultimo; i++)

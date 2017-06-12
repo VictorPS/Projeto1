@@ -1,7 +1,5 @@
 #ifndef GRAFOSM_H
 #define GRAFOSM_H
-#include <string.h>
-#include <stdio.h>
 
 #define NULO -1
 
@@ -26,3 +24,5 @@ tApontador proximoAdj(tGrafo *g, tVertice v, tApontador u);
 void recuperaAdj(tGrafo *g, tVertice v, tApontador p, tVertice *u, tPeso *peso);
 void imprimeGrafo(tGrafo *g);
 #endif // GRAFOSM
+
+
