@@ -43,20 +43,23 @@ void K_insereHeap(tGrafo *g, tHeap *h, int nVertices){
 // nVertices - número de vértices do grafo
 // krusk - grafo que contem a arvore mínima gerada por kruskal quando k = 0
 // k - numero de arestas retiradas para formar os clusteres
-void doKruskal(tGrafo *g, int **classes, tHeap *q, int nVertices, tGrafo *krusk, int k){
+void doKruskal(tGrafo *g, int **classes, int nVertices, tGrafo *krusk, int k){
+    tHeap q;
     int c = 1;
     int n = 0;
     int i;
+
+    inicializaHeap(&q, nVertices*nVertices);
 
     for(i=0; i<nVertices;i++){
         (*classes)[i] = 0;
     }
 
-    K_insereHeap(&(*g) , &(*q) ,nVertices);
+    K_insereHeap(&(*g) , &q ,nVertices);
 
     while(n < nVertices - k - 1){
-        K_union(classes,q, &c, &n, nVertices, krusk);
-        if(isEmpty(q)){
+        K_union(classes, &q, &c, &n, nVertices, krusk);
+        if(isEmpty(&q)){
             printf("Erro, a heap chegou ao fim e nao foi possivel gerar os clusters\n");
             break;
         }

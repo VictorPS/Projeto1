@@ -63,7 +63,7 @@ int main(int argc, char** argv){
 	}
 
 	// faz o algoritmo de kruskall
-    doKruskal(&g, &classes, &heap, v, &minima, k);
+    doKruskal(&g, &classes, v, &minima, k);
     // coloca no arquivo de saida as classes
     K_criaArquivoClasses(&classes, out, v, k);
 
